@@ -1,0 +1,16 @@
+.o
+.so
+/Debug/
+/.settings/
+.settings/
+/.settings
+/.settings/
+/.settings/*
+/.settings/language.settings.xml
+.settings/org.eclipse.cdt.managedbuilder.core.prefs
+
+/Default/
+
+.pydevproject
+.cproject
+.project
