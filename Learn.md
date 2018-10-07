@@ -12,6 +12,17 @@ https://blog.csdn.net/yusiguyuan/article/details/22876185
 ## poll 与 select的区别
 
 
+## 本机IP地址、 127.0.0.1 和 0.0.0.0 的区别
+https://blog.csdn.net/ggq89/article/details/80336717
+
+
+## Socket长连接和短连接的区别
+https://blog.csdn.net/jasonjwl/article/details/52085264
+
+##值结果参数
+
+
+##time_wait存在的两个理由
 
 
 ## socket用于进程间通讯
