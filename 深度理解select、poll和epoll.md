@@ -71,8 +71,6 @@ https://blog.csdn.net/ctthuangcheng/article/details/9498569
 这是TCP紧急模式的一个重要特点：TCP首部指出发送端已经进入紧急模式（即伴随紧急偏移的URG标志已经设置），但是由紧急指针所指的实际数据字节却不一定随同送出。事实上即使发送端TCP因流量控制而暂停发送数据（接收端的套接字接收缓冲区已满，导致其TCP想发送端TCP通告了一个值为0 的窗口），紧急通知照样不伴随任何数据的发送。这也是应用进程使用TCP紧急模式（即带外数据）的一个原因：即便数据的流动会因为TCP的流量控制而停止，紧急通知却总是无障碍的发送到对端TCP。
 
 
-#close和shutdown的区别
-
 
 #poll
 
@@ -88,10 +86,6 @@ short revents;
 
 }
 
-
-#IO多路复用之select函数详解 
-
-https://blog.csdn.net/lixungogogo/article/details/52219951
 
 #IO多路复用之poll函数详解 
 
