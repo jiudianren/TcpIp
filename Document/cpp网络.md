@@ -1,7 +1,5 @@
 
-# 流量控制和拥塞控制
 
-https://blog.csdn.net/chenchaofuck1/article/details/51995590
 
 
 #临界资源和临界区
