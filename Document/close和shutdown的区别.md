@@ -3,11 +3,9 @@ https://blog.csdn.net/lgp88/article/details/7176509
 
 1.close()函数
 
-
 	#include<unistd.h>
 	int close(int sockfd);     //返回成功为0，出错为-1.
 	
-
 close 一个套接字的默认行为是把套接字标记为已关闭，然后立即返回到调用进程，该套接字描述符不能再由调用进程使用，
 也就是说它不能再作为read或write的第一个参数，然而TCP将尝试发送已排队等待发送到对端的任何数据，发送完毕后发生的是正常的TCP连接终止序列。
 
@@ -15,7 +13,6 @@ close 一个套接字的默认行为是把套接字标记为已关闭，然后立即返回到调用进程，该套接
  描述符引用计数会相应的减一，当引用计数仍大于零时，这个close调用就不会引发TCP的四路握手断连过程。
 
 2.shutdown()函数
-
 
 	#include<sys/socket.h>
 	int shutdown(int sockfd,int howto);  //返回成功为0，出错为-1.

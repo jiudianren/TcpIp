@@ -1,16 +1,17 @@
 poll
 https://blog.csdn.net/lixungogogo/article/details/52226434　　
 
-poll的机制与select类似，与select在本质上没有多大差别，管理多个描述符也是进行轮询，根据描述符的状态进行处理，但是poll没有最大文件描述符数量的限制。 
+poll的机制与select类似，与select在本质上没有多大差别，管理多个描述符也是进行轮询，根据描述符的状态进行处理，
+		
+		但是poll没有最大文件描述符数量的限制。 
 　　poll和select同样存在一个缺点就是，包含大量文件描述符的数组被整体复制于用户态和内核的地址空间之间，而不论这些文件描述符是否就绪，它的开销随着文件描述符数量的增加而线性增大。
 
 poll函数
 　　函数格式如下所示：
 
-#include <poll.h>
-int poll ( struct pollfd * fds, unsigned int nfds, int timeout);
-1
-2
+		#include <poll.h>
+####int poll ( struct pollfd * fds, unsigned int nfds, int timeout);
+
 参数分析
 struct pollfd * fds
 pollfd结构体定义如下：
@@ -27,49 +28,21 @@ pollfd结构体定义如下：
 　　events域中请求的任何事件都可能在revents域中返回。 
 　　合法的事件如下：
 
-    POLLIN 　　　　　　　　有数据可读。
+	   POLLIN 　　　　　　　　有数据可读。
+	　　POLLRDNORM 　　　　  有普通数据可读。
+	　　POLLRDBAND　　　　　 有优先数据可读。
+	　　POLLPRI　　　　　　　　 有紧迫数据可读。
+	　　POLLOUT　　　　　　      写数据不会导致阻塞。
+	　　POLLWRNORM　　　　　  写普通数据不会导致阻塞。
+	　　POLLWRBAND　　　　　   写优先数据不会导致阻塞。
+	　　POLLMSGSIGPOLL 　　　　消息可用。
 
-　　POLLRDNORM 　　　　  有普通数据可读。
-
-　　POLLRDBAND　　　　　 有优先数据可读。
-
-　　POLLPRI　　　　　　　　 有紧迫数据可读。
-
-　　POLLOUT　　　　　　      写数据不会导致阻塞。
-
-　　POLLWRNORM　　　　　  写普通数据不会导致阻塞。
-
-　　POLLWRBAND　　　　　   写优先数据不会导致阻塞。
-
-　　POLLMSGSIGPOLL 　　　　消息可用。
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
 　　此外，revents域中还可能返回下列事件： 
-　　
 
-    POLLER　　   指定的文件描述符发生错误。
+	   POLLER　　   指定的文件描述符发生错误。
+	　　POLLHUP　　 指定的文件描述符挂起事件。
+	　　POLLNVAL　　指定的文件描述符非法。
 
-　　POLLHUP　　 指定的文件描述符挂起事件。
-
-　　POLLNVAL　　指定的文件描述符非法。
-1
-2
-3
-4
-5
 　　这些事件在events域中无意义，因为它们在合适的时候总是会从revents中返回。
 
 　　使用poll()和select()不一样，你不需要显式地请求异常情况报告。 

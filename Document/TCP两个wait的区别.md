@@ -1,11 +1,8 @@
 
 https://www.cnblogs.com/luckcs/articles/6396782.html £¨ÈÏÕæ¿´£©
-
-
 https://www.cnblogs.com/sunxucool/p/3449068.html
 
 https://www.cnblogs.com/luckcs/articles/6396782.html
-
 https://blog.csdn.net/fei33423/article/details/49703021
 TIME_WAIT×´Ì¬´æÔÚµÄÀíÓÉ
 
@@ -24,12 +21,6 @@ TCPÐ­ÒéÔÚ¹Ø±ÕÁ¬½ÓµÄËÄ´ÎÎÕÊÖ¹ý³ÌÖÐ£¬×îÖÕµÄACKÊÇÓÉÖ÷¶¯¹Ø±ÕÁ¬½ÓµÄÒ»¶Ë£¨ºóÃæÍ³³ÆA¶Ë£
 2£©ÔÊÐíÀÏµÄÖØ¸´·Ö½ÚÔÚÍøÂçÖÐÏûÊÅ 
 
 TCP·Ö½Ú¿ÉÄÜÓÉÓÚÂ·ÓÉÆ÷Òì³£¶ø¡°ÃÔÍ¾¡±£¬ÔÚÃÔÍ¾ÆÚ¼ä£¬TCP·¢ËÍ¶Ë¿ÉÄÜÒòÈ·ÈÏ³¬Ê±¶øÖØ·¢Õâ¸ö·Ö½Ú£¬ÃÔÍ¾µÄ·Ö½ÚÔÚÂ·ÓÉÆ÷ÐÞ¸´ºóÒ²»á±»ËÍµ½×îÖÕÄ¿µÄµØ£¬Õâ¸ö³Ùµ½µÄÃÔÍ¾·Ö½Úµ½´ïÊ±¿ÉÄÜ»áÒýÆðÎÊÌâ¡£ÔÚ¹Ø±Õ¡°Ç°Ò»¸öÁ¬½Ó¡±Ö®ºó£¬ÂíÉÏÓÖÖØÐÂ½¨Á¢ÆðÒ»¸öÏàÍ¬µÄIPºÍ¶Ë¿ÚÖ®¼äµÄ¡°ÐÂÁ¬½Ó¡±£¬¡°Ç°Ò»¸öÁ¬½Ó¡±µÄÃÔÍ¾ÖØ¸´·Ö×éÔÚ¡°Ç°Ò»¸öÁ¬½Ó¡±ÖÕÖ¹ºóµ½´ï£¬¶ø±»¡°ÐÂÁ¬½Ó¡±ÊÕµ½ÁË¡£ÎªÁË±ÜÃâÕâ¸öÇé¿ö£¬TCPÐ­Òé²»ÔÊÐí´¦ÓÚTIME_WAIT×´Ì¬µÄÁ¬½ÓÆô¶¯Ò»¸öÐÂµÄ¿ÉÓÃÁ¬½Ó£¬ÒòÎªTIME_WAIT×´Ì¬³ÖÐø2MSL£¬¾Í¿ÉÒÔ±£Ö¤µ±³É¹¦½¨Á¢Ò»¸öÐÂTCPÁ¬½ÓµÄÊ±ºò£¬À´×Ô¾ÉÁ¬½ÓÖØ¸´·Ö×éÒÑ¾­ÔÚÍøÂçÖÐÏûÊÅ¡£
-
- 
-
- 
-
- 
 
  
 

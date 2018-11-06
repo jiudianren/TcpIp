@@ -20,41 +20,40 @@ select函数
 　　该函数允许进程指示内核等待多个事件中的任何一个发生，并只在有一个或多个时间发生或经历一段指定的时间后才唤醒他。 
 　　
 
-#include <sys/select.h>
-#include >sys/time.h>
+	#include <sys/select.h>
+	#include <sys/time.h>
 
-int select(int maxfdp1,fd_set *readset,fd_set *writeset,fd_set *exceptset,const struct timeval *timeout);
-1
-2
-3
-4
+### int select(int maxfdp1,fd_set *readset,fd_set *writeset,fd_set *exceptset,const struct timeval *timeout);
+
 返回值：
 　　若有就绪描述符返回其数目，若超时则为0，若出错则为-1
 
-参数
+参数:
 第一个参数——int maxfdp1
 　　第一个参数maxfdp1指定待测试的描述字个数。 
 　　它的值是待测试的最大描述字加1（因此把该参数命名为maxfdp1），描述字0、1、2…maxfdp1-1均将被测试。 
 因为文件描述符是从0开始的。
 
-fd_set *readset
-fd_set *writeset
-fd_set *exceptset
-　　中间的三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述字。　 
-　　如果对某一个的条件不感兴趣，就可以把它设为空指针。struct fd_set可以理解为一个集合，这个集合中存放的是文件描述符，可通过以下四个宏进行设置：
+	fd_set *readset
+	fd_set *writeset
+	fd_set *exceptset
+中间的三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述字。　 
+　　如果对某一个的条件不感兴趣，就可以把它设为空指针。
 
-void FD_ZERO(fd_set *fdset);           
-//清空集合
+struct fd_set可以理解为一个集合，这个集合中存放的是文件描述符，可通过以下四个宏进行设置：
 
-void FD_SET(int fd, fd_set *fdset);   
-//将一个给定的文件描述符加入集合之中
+	void FD_ZERO(fd_set *fdset);           
+	//清空集合	
+	void FD_SET(int fd, fd_set *fdset);   
+	//将一个给定的文件描述符加入集合之中
 
-void FD_CLR(int fd, fd_set *fdset);   
-//将一个给定的文件描述符从集合中删除
+	void FD_CLR(int fd, fd_set *fdset);   
+	//将一个给定的文件描述符从集合中删除
+	
+	int FD_ISSET(int fd, fd_set *fdset);   
+	// 检查集合中指定的文件描述符是否可以读写 
 
-int FD_ISSET(int fd, fd_set *fdset);   
-// 检查集合中指定的文件描述符是否可以读写 
-
+Timeout参数：
 	const struct timeval *timeout
 	　　timeout告知内核等待所指定描述字中的任何一个就绪可花多少时间。其timeval结构用于指定这段时间的秒数和微秒数。
 	
@@ -65,36 +64,23 @@ int FD_ISSET(int fd, fd_set *fdset);
 	               long tv_usec;  //microseconds
 	
 	   };
-1
-2
-3
-4
-5
-6
-7
+
 这个参数有三种可能： 
 １．永远等待下去：仅在有一个描述字准备好I/O时才返回。为此，把该参数设置为空指针NULL。 
 ２．等待一段固定时间：在有一个描述字准备好I/O时返回，但是不超过由该参数所指向的timeval结构中指定的秒数和微秒数。 
 3.根本不等待：检查描述字后立即返回，这称为轮询。为此，该参数必须指向一个timeval结构，而且其中的定时器值必须为0。
 
 select函数的调用过程
-（1）使用copy_from_user从用户空间拷贝fd_set到内核空间
 
-（2）注册回调函数__pollwait
-
-（3）遍历所有fd
-
-　　调用其对应的poll方法（对于socket，这个poll方法是sock_poll，sock_poll根据情况会调用到tcp_poll,udp_poll或者datagram_poll）
-
-（4）以tcp_poll为例，其核心实现就是__pollwait，也就是上面注册的回调函数。
-
-（5）__pollwait的主要工作就是把current（当前进程）挂到设备的等待队列中，不同的设备有不同的等待队列，对于tcp_poll来说，其等待队列是sk->sk_sleep（注意把进程挂到等待队列中并不代表进程已经睡眠了）。在设备收到一条消息（网络设备）或填写完文件数据（磁盘设备）后，会唤醒设备等待队列上睡眠的进程，这时current便被唤醒了。
-
-（6）poll方法返回时会返回一个描述读写操作是否就绪的mask掩码，根据这个mask掩码给fd_set赋值。
-
-（7）如果遍历完所有的fd，还没有返回一个可读写的mask掩码，则会调用schedule_timeout是调用select的进程（也就是current）进入睡眠。当设备驱动发生自身资源可读写后，会唤醒其等待队列上睡眠的进程。如果超过一定的超时时间（schedule_timeout指定），还是没人唤醒，则调用select的进程会重新被唤醒获得CPU，进而重新遍历fd，判断有没有就绪的fd。
-
-（8）把fd_set从内核空间拷贝到用户空间。
+	（1）使用copy_from_user从用户空间拷贝fd_set到内核空间
+	（2）注册回调函数__pollwait
+	（3）遍历所有fd
+	　　调用其对应的poll方法（对于socket，这个poll方法是sock_poll，sock_poll根据情况会调用到tcp_poll,udp_poll或者datagram_poll）
+	（4）以tcp_poll为例，其核心实现就是__pollwait，也就是上面注册的回调函数。
+	（5）__pollwait的主要工作就是把current（当前进程）挂到设备的等待队列中，不同的设备有不同的等待队列，对于tcp_poll来说，其等待队列是sk->sk_sleep（注意把进程挂到等待队列中并不代表进程已经睡眠了）。在设备收到一条消息（网络设备）或填写完文件数据（磁盘设备）后，会唤醒设备等待队列上睡眠的进程，这时current便被唤醒了。
+	（6）poll方法返回时会返回一个描述读写操作是否就绪的mask掩码，根据这个mask掩码给fd_set赋值。
+	（7）如果遍历完所有的fd，还没有返回一个可读写的mask掩码，则会调用schedule_timeout是调用select的进程（也就是current）进入睡眠。当设备驱动发生自身资源可读写后，会唤醒其等待队列上睡眠的进程。如果超过一定的超时时间（schedule_timeout指定），还是没人唤醒，则调用select的进程会重新被唤醒获得CPU，进而重新遍历fd，判断有没有就绪的fd。
+	（8）把fd_set从内核空间拷贝到用户空间。
 
 select睡眠和唤醒过程
 　　select巧妙的利用等待队列机制让用户进程适当在没有资源可读/写时睡眠，有资源可读/写时唤醒。
@@ -109,9 +95,10 @@ select唤醒过程
 　　驱动程序维护了针对自身资源读写的等待队列。当设备驱动发现自身资源变为可读写并且有进程睡眠在该资源的等待队列上时，就会唤醒这个资源等待队列上的进程。
 
 # select的缺点
-　　　1.每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大 
-　　2.同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也很大 
-　　3.select支持的文件描述符数量太小了，默认是1024
+　　
+		1.每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大 
+	　　	2.同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也很大 
+	　　	3.select支持的文件描述符数量太小了，默认是1024
 
 
 使用select函数写的服务器代码如下：
