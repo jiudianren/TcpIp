@@ -16,7 +16,7 @@ TCPµÄ"ËÄ´Î·ÖÊÖ"¹Ø±Õ. TCPÊÇÈ«Ë«¹¤µÄÐÅµÀ,?¿ÉÒÔ¿´×÷Á½Ìõµ¥¹¤ÐÅµÀ, TCPÁ¬½ÓÁ½¶ËµÄÁ½¸ö¶
 ¶ÔÒ»¸öÒÑ¾­ÊÕµ½FIN°üµÄsocketµ÷ÓÃread·½·¨,Èç¹û½ÓÊÕ»º³åÒÑ¿Õ,Ôò·µ»Ø0,Õâ¾ÍÊÇ³£ËµµÄ±íÊ¾Á¬½Ó¹Ø±Õ.
 
 µ«µÚÒ»´Î¶ÔÆäµ÷ÓÃwrite·½·¨Ê±,Èç¹û·¢ËÍ»º³åÃ»ÎÊÌâ,»á·µ»ØÕýÈ·Ð´Èë(·¢ËÍ).
-µ«·¢ËÍµÄ±¨ÎÄ»áµ¼ÖÂ¶Ô¶Ë·¢ËÍRST±¨ÎÄ,ÒòÎª¶Ô¶ËµÄsocketÒÑ¾­µ÷ÓÃÁËclose,ÍêÈ«¹Ø±Õ,?¼È²»·¢ËÍ,?Ò²²»½ÓÊÕÊý¾Ý.?ËùÒÔ,?
+µ«·¢ËÍµÄ±¨ÎÄ»áµ¼ÖÂ¶Ô¶Ë·¢ËÍRST±¨ÎÄ,ÒòÎª¶Ô¶ËµÄsocketÒÑ¾­µ÷ÓÃÁËclose,ÍêÈ«¹Ø±Õ,¼È²»·¢ËÍ,Ò²²»½ÓÊÕÊý¾Ý.ËùÒÔ,
 
 µÚ¶þ´Îµ÷ÓÃwrite·½·¨(¼ÙÉèÔÚÊÕµ½RSTÖ®ºó),»áÉú³ÉSIGPIPEÐÅºÅ,µ¼ÖÂ½ø³ÌÍË³ö¡£
 

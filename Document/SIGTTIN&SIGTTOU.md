@@ -4,7 +4,7 @@ Unix»·¾³ÏÂ£¬µ±Ò»¸ö½ø³ÌÒÔºóÌ¨ÐÎÊ½Æô¶¯£¬µ«³¢ÊÔÈ¥¶ÁÐ´¿ØÖÆÌ¨ÖÕ¶ËÊ±£¬½«»á´¥·¢SIGTTIN£
 ½Ó×Å£¬½ø³Ì½«»áÔÝÍ££¨linuxÄ¬ÈÏÇé¿öÏÂ£©£¬read/write½«»á·µ»Ø´íÎó¡£
 
 Õâ¸öÊ±ºò£¬shell½«»á·¢ËÍÍ¨Öª¸øÓÃ»§£¬ÌáÐÑÓÃ»§ÇÐ»»´Ë½ø³ÌÎªÇ°Ì¨½ø³Ì£¬ÒÔ±ã¼ÌÐøÖ´ÐÐ¡£ÓÉºóÌ¨ÇÐ»»ÖÁÇ°Ì¨µÄ·½Ê½ÊÇfgÃüÁî£¬Ç°Ì¨×ªÎªºóÌ¨ÔòÎªCTRL+Z¿ì½Ý¼ü¡£
-??ÄÇÃ´ÎÊÌâÀ´ÁË£¬ÈçºÎ²ÅÄÜÔÚ²»°Ñ½ø³ÌÇÐ»»ÖÁÇ°Ì¨µÄÇé¿öÏÂ£¬¶ÁÐ´¿ØÖÆÆ÷²»»á±»ÔÝÍ££¿´ð°¸£ºÖ»ÒªºöÂÔSIGTTINºÍSIGTTOUÐÅºÅÁ¿¼´¿É£ºsignal(SIGTTOU, SIG_IGN)¡£
+ÄÇÃ´ÎÊÌâÀ´ÁË£¬ÈçºÎ²ÅÄÜÔÚ²»°Ñ½ø³ÌÇÐ»»ÖÁÇ°Ì¨µÄÇé¿öÏÂ£¬¶ÁÐ´¿ØÖÆÆ÷²»»á±»ÔÝÍ££¿´ð°¸£ºÖ»ÒªºöÂÔSIGTTINºÍSIGTTOUÐÅºÅÁ¿¼´¿É£ºsignal(SIGTTOU, SIG_IGN)¡£
 stty stop/-stopÃüÁîÊÇÓÃÓÚÉèÖÃÊÕµ½SIGTTOUÐÅºÅÁ¿ºóÊÇ·ñÖ´ÐÐÔÝÍ££¬ÒòÎªÓÐÐ©ÏµÍ³µÄÄ¬ÈÏÐÐÎª²»Ò»ÖÂ£¬±ÈÈçmacÊÇÄ¬ÈÏºöÂÔ£¬¶ølinuxÊÇÄ¬ÈÏÆôÓÃ¡£stty -a¿ÉÒÔ²é¿´µ±Ç°ttyµÄÅäÖÃ²ÎÊý
 
 
