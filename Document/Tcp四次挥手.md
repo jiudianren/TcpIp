@@ -1,3 +1,15 @@
+
+tcp三次握手的过程，accept发生在三次握手哪个阶段？
+三次握手：C----->SYN K
+              S------>ACK K+1 SYN J
+              C------->ACK J+1   
+              DONE!
+client 的 connect  引起3次握手
+server 在socket， bind， listen后，阻塞在accept，三次握手完成后，accept返回一个fd，
+因此accept发生在三次握手之后。。。。。。
+
+
+
 tcp结束连接怎么握手，time_wait状态是什么,为什么会有time_wait状态？哪一方会有time_wait状态，如何避免time_wait状态占用资源（必须回答的详细）
 
 
