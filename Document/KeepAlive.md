@@ -30,8 +30,8 @@ tcp keep-alive是TCP的一种检测TCP连接状况的保鲜机制。tcp keep-alive保鲜定时器，支
 net.ipv4.tcp_keepalive_intvl = 15 
 net.ipv4.tcp_keepalive_probes = 5 
 net.ipv4.tcp_keepalive_time = 1800 
-keepalive是TCP保鲜定时器，当网络两端建立了TCP连接之后，闲置（双方没有任何数据流发送往来）了tcp_keepalive_time后，服务器就会尝试向客户端发送侦测包，来判断TCP连接状况(有可能客户端崩溃、强制关闭了应用、主机不可达等等)。如果没有收到对方的回答(ack包)，则会在 tcp_keepalive_intvl后再次尝试发送侦测包，直到收到对方的ack,如果一直没有收到对方的ack,一共会尝试 tcp_keepalive_probes次，每次的间隔时间在这里分别是15s, 30s, 45s, 60s, 75s。如果尝试tcp_keepalive_probes,依然没有收到对方的ack包，则会丢弃该TCP连接。TCP连接默认闲置时间是2小时，一般设置为30分钟足够了
-
----------------------
-
-本文来自 许文杰 的CSDN 博客 ，全文地址请点击：https://blog.csdn.net/weixin_37672169/article/details/80283935?utm_source=copy 
+keepalive是TCP保鲜定时器，当网络两端建立了TCP连接之后，闲置（双方没有任何数据流发送往来）了tcp_keepalive_time后，
+服务器就会尝试向客户端发送侦测包，来判断TCP连接状况(有可能客户端崩溃、强制关闭了应用、主机不可达等等)。
+如果没有收到对方的回答(ack包)，则会在 tcp_keepalive_intvl后再次尝试发送侦测包，直到收到对方的ack,如果一直没有收到对方的ack,一共会尝试 tcp_keepalive_probes次，每次的间隔时间在这里分别是15s, 30s, 45s, 60s, 75s。
+如果尝试tcp_keepalive_probes,依然没有收到对方的ack包，则会丢弃该TCP连接。
+TCP连接默认闲置时间是2小时，一般设置为30分钟足够了

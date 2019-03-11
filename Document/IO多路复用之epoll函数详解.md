@@ -1,18 +1,19 @@
 epoll
 　　 在linux的网络编程中，很长的时间都在使用select来做事件触发。
-   在linux新的内核中，有了一种替换它的机制，就是epoll。 
+     在linux新的内核中，有了一种替换它的机制，就是epoll。 
 　　
    相比于select，
    
     epoll最大的好处在于它不会随着监听fd数目的增长而降低效率。
    
   因为在内核中的select实现中，它是采用轮询来处理的，轮询的fd数目越多，自然耗时越多。 
-　　相对于select和poll来说，epoll更加灵活，没有描述符限制。 
-　　
+相对于select和poll来说，epoll更加灵活，没有描述符限制。 
+
+
     epoll使用一个文件描述符管理多个描述符，将用户关系的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。
 
 epoll接口
-　　epoll操作过程需要三个接口，分别如下：
+   epoll操作过程需要三个接口，分别如下：
 
 	#include <sys/epoll.h>
 	int epoll_create(int size);
@@ -20,7 +21,7 @@ epoll接口
 	int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
 
 　　
-   首先要调用epoll_create建立一个epoll对象。参数size是内核保证能够正确处理的最大句柄数，多于这个最大数时内核可不保证效果。 
+首先要调用epoll_create建立一个epoll对象。参数size是内核保证能够正确处理的最大句柄数，多于这个最大数时内核可不保证效果。 
 　　epoll_ctl可以操作上面建立的epoll，例如，将刚建立的socket加入到epoll中让其监控，或者把 epoll正在监控的某个socket句柄移出epoll，不再监控它等等。 
 　　epoll_wait在调用时，在给定的timeout时间内，当在监控的所有句柄中有事件发生时，就返回用户态的进程。
 
@@ -64,20 +65,20 @@ events可以是以下几个宏的集合：
 　　所以，实际上在你调用epoll_ create后，内核就已经在内核态开始准备帮你存储要监控的句柄了，每次调用epoll_ctl只是在往内核的数据结构里塞入新的socket句柄。 
 　　在内核里，一切皆文件。所以，epoll向内核注册了一个文件系统，用于存储上述的被监控socket。当你调用epoll_create时，就会在这个虚拟的epoll文件系统里创建一个file结点。当然这个file不是普通文件，它只服务于epoll。
 
-epoll实现机制
+# epoll实现机制
 　　epoll在被内核初始化时（操作系统启动），同时会开辟出epoll自己的内核高速cache区，用于安置每一个我们想监控的socket。 
 　　这些socket会以红黑树的形式保存在内核cache里，以支持快速的查找、插入、删除。 
 　　这个内核高速cache区，就是建立连续的物理内存页，然后在之上建立slab层。 
 　　简单的说，就是物理上分配好你想要的size的内存对象，每次使用时都是使用空闲的已分配好的对象。 
-　　epoll的高效就在于，当我们调用epoll_ ctl往里塞入百万个句柄时，epoll_ wait仍然可以飞快的返回，并有效的将发生事件的句柄给我们用户。 
-　　这是由于我们在调用epoll_ create时，内核除了帮我们在epoll文件系统里建了个file结点，在内核cache里建了个红黑树用于存储以后epoll_ ctl传来的socket外，还会再建立一个list链表，用于存储准备就绪的事件. 
+　　epoll的高效就在于，当我们调用epoll_ctl往里塞入数十万(10k,100k（这个级别可以），1000k(这个级别达不到))个句柄时，epoll_ wait仍然可以飞快的返回，并有效的将发生事件的句柄给我们用户。 
+　　这是由于我们在调用epoll_create时，内核除了帮我们在epoll文件系统里建了个file结点，在内核cache里建了个红黑树用于存储以后epoll_ctl传来的socket外，还会再建立一个list链表，用于存储准备就绪的事件. 
 　　当epoll_ wait调用时，仅仅观察这个list链表里有没有数据即可。有数据就返回，没有数据就sleep，等到timeout时间到后即使链表没数据也返回。所以，epoll_wait非常高效。 
 　　而且，通常情况下即使我们要监控百万计的句柄，大多一次也只返回很少量的准备就绪句柄而已，所以，epoll_wait仅需要从内核态copy少量的句柄到用户态而已。 
 　　那么，这个准备就绪list链表是怎么维护的呢？ 
 　　当我们执行epoll_ctl时，除了把socket放到epoll文件系统里file对象对应的红黑树上之外，还会给内核中断处理程序注册一个回调函数，告诉内核，如果这个句柄的中断到了，就把它放到准备就绪list链表里。 
 　　所以，当一个socket上有数据到了，内核在把网卡上的数据copy到内核中后就来把socket插入到准备就绪链表里了。
 　　如此，一颗红黑树，一张准备就绪句柄链表，少量的内核cache，就帮我们解决了大并发下的socket处理问题。 
-　　执行epoll_ create时，创建了红黑树和就绪链表，执行epoll_ ctl时，如果增加socket句柄，则检查在红黑树中是否存在，存在立即返回，不存在则添加到树干上，然后向内核注册回调函数，用于当中断事件来临时向准备就绪链表中插入数据。执行epoll_wait时立刻返回准备就绪链表里的数据即可。
+　　执行epoll_ create时，创建了红黑树和就绪链表，执行epoll_ctl时，如果增加socket句柄，则检查在红黑树中是否存在，存在立即返回，不存在则添加到树干上，然后向内核注册回调函数，用于当中断事件来临时向准备就绪链表中插入数据。执行epoll_wait时立刻返回准备就绪链表里的数据即可。
 
 工作模式
 　　epoll对文件描述符的操作有两种模式：LT（level trigger）和ET（edge trigger）。LT模式是默认模式，LT模式与ET模式的区别如下：

@@ -1,5 +1,5 @@
-poll
-https://blog.csdn.net/lixungogogo/article/details/52226434　　
+
+[poll](https://blog.csdn.net/lixungogogo/article/details/52226434)
 
 poll的机制与select类似，与select在本质上没有多大差别，管理多个描述符也是进行轮询，根据描述符的状态进行处理，
 		
